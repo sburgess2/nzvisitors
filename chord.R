@@ -60,16 +60,37 @@ activities1 <- activities %>%
   #circos.par is used for setting parameters for the circular layout
   #gap.after controls the after each sector
   circos.par(gap.after = gap_vector)
-  #alternatively
-  circos.par(gap.after = c(rep(5, 9), 15, 5, 15, 15))
-  
   chordDiagram(adjacencyData,
                order = desired_order,
                transparency = 0.5)
+  ciros.clear()
+  
+  #alternatively
+  circos.par(gap.after = c(rep(5, 9), 15, 5, 15, 15))
+  chordDiagram(adjacencyData, order = c("Bungy jumping", "Cycling", "Extreme ride", "Playing golf", "Fishing", "Hiking", "Jet-boating", "Rafting, canoeing, kayaking", "Snow sport" , "Stargazing", "Hot pools", "Zoo or wildlife park", "Museum or art gallery"))
+  circos.clear()
   
   #Example below from https://jokergoo.github.io/circlize_book/book/the-chorddiagram-function.html
   #repeat a gap of 5 for repeated nrow-1, followed by a gap of 15, followed by a gap of 5 repeated ncol-1 followed by a gap of 15
   circos.par(gap.after = c(rep(5, nrow(activities2)-1), 15, rep(5, ncol(activities2)-1), 15))
-  chordDiagram(adjacencyData, transparency = 0.5, order = c("Bungy jumping", "Cycling", "Extreme ride", "Playing golf", "Fishing", "Hiking", "Jet-boating", "Rafting, canoeing, kayaking", "Snow sport" , "Stargazing", "Hot pools", "Zoo or wildlife park", "Museum or art gallery"))
+  chordDiagram(mat)
+  
+  devtools::install_github("G-Thomson/Manu")
+  library(Manu)
+  # Select 3 colours from the Kererū  palette 
+  selected_colours <- get_pal("Kereru")
+  #[c(1:6)]
+  # Create a gradient of 100 colours between the selected colours
+  colorRampPalette(selected_colours)(18)
+  
+  library(paletteer)
+  paletteer_d("ggsci::deep_purple_material")
+  paletteer_d("ggsci::pink_material")
+  
+  grid.col = c("Bungy jumping" = "#d73027", "Cycling" = "#fdae61", "Extreme ride" = "#f46d43", "Playing golf" = "#ffffbf", "Fishing" = "#e0f3f8", "Hiking" = "#1a9850", "Jet-boating" = "#abd9e9", "Rafting, canoeing, kayaking" = "#4575b4", "Snow sport" = "grey" , "Stargazing"= "#fee090", "Hot pools" = "#B39DDBFF", "Zoo or wildlife park" = "#311B92FF", "Museum or art gallery" = "#F48FB1FF")
+  grid.col = c(S1 = "red", S2 = "green", S3 = "blue",
+               E1 = "grey", E2 = "grey", E3 = "grey", E4 = "grey", E5 = "grey", E6 = "grey")
+  chordDiagram(mat, grid.col = grid.col)
+  chordDiagram(adjacencyData, grid.col = grid.col, order = c("Bungy jumping", "Cycling", "Extreme ride", "Playing golf", "Fishing", "Hiking", "Jet-boating", "Rafting, canoeing, kayaking", "Snow sport" , "Stargazing", "Hot pools", "Zoo or wildlife park", "Museum or art gallery"))
   circos.clear()
   
