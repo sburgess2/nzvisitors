@@ -1,6 +1,20 @@
 library(tidyverse)
 library(circlize)
+
+main <- read_csv("data/survey_main_header.csv")
+
+str(main)
+
+main2 <- main %>%
+  select(
+    year, qtr, date, response_id, country_of_residence, country_of_residence_group,
+    purpose_of_visit_main
+  ) %>%
+  filter(year == 2024, purpose_of_visit_main == "Holiday / vacation")
+
 activities <- read_csv("data/activities.csv")
+
+df <- inner_join(main2, activities, by = "response_id")
 
 activities1 <- activities %>%
   mutate(
@@ -142,19 +156,19 @@ all_areas %>%
     current_grid[xx] <- "#1F6683"
 
     # Create color matrix for links
-    link_colors <- matrix("#80808080",
+    link_colors <- matrix("#D1C7B5",
       nrow = nrow(adjacencyData), ncol = ncol(adjacencyData),
       dimnames = list(rownames(adjacencyData), colnames(adjacencyData))
     )
 
     # Color outgoing links (from xx to anywhere) in blue
     if (xx %in% rownames(adjacencyData)) {
-      link_colors[xx, ] <- "#1F668380"
+      link_colors[xx, ] <- "#1F6683"
     }
 
     # Color incoming links (from anywhere to xx) in blue
     if (xx %in% colnames(adjacencyData)) {
-      link_colors[, xx] <- "#1F668380"
+      link_colors[, xx] <- "#1F6683"
     }
 
     chordDiagram(adjacencyData,
